@@ -20,6 +20,10 @@ struct AddBookView: View {
     
     let genres = ["Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
     
+    var disabledForm: Bool {
+        return genre.isEmpty || title.isEmpty || author.isEmpty
+    }
+    
     var body: some View {
         NavigationView {
             Form {
@@ -35,11 +39,6 @@ struct AddBookView: View {
                 }
                 
                 Section {
-//                    Picker("rating", selection: $rating) {
-//                        ForEach(0..<6) {
-//                            Text("\($0)")
-//                        }
-//                    }
                     RatingView(rating: $rating)
                     TextField("Write A Review", text: $review)
                 }
@@ -57,6 +56,7 @@ struct AddBookView: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }
+                .disabled(disabledForm)
             }
         .navigationBarTitle("Add Book")
         }
