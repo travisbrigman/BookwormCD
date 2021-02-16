@@ -13,8 +13,20 @@ struct DetailView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
     @State private var showingDeleteAlert = false
-    
     let book: Book
+    
+    var formattedAddDate: String {
+        
+        if let dateAdded = self.book.date {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .long
+            return formatter.string(from: dateAdded)
+        } else {
+            return "N/A"
+        }
+    }
+    
+
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -39,6 +51,9 @@ struct DetailView: View {
                 
                 RatingView(rating: .constant(Int(self.book.rating)))
                     .font(.largeTitle)
+                
+                Text("Date Added: \(self.formattedAddDate)")
+                    .padding()
                 Spacer()
             }
         }
